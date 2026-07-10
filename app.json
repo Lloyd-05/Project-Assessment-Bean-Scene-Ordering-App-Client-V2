@@ -20,10 +20,17 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.lorddoctor48.BeanSceneClientV2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "170e3a2a-3d17-44fd-b8ab-fb460e85cf9e"
+      }
+    },
+    "owner": "lorddoctor-48"
   }
 }
