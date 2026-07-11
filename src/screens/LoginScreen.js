@@ -110,9 +110,11 @@ const styles = StyleSheet.create({
   },
   Image: {
     marginTop: 50,
-    width: "100%",
-    aspectRatio: 16 / 9,
-    resizeMode: 'contain'
+    width: "80%",
+    height: undefined,
+    aspectRatio: 1.8, // tweak until it fits nicely
+    resizeMode: "contain",
+    alignSelf: "center"
   },
   errorText: {
     color: '#d32f2f',
