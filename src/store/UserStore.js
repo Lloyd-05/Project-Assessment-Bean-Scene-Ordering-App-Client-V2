@@ -14,7 +14,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/user`);
+      const data = await fetchWithAuth(`${APIEndpoint}/users`);
       set({ users: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -28,7 +28,7 @@ export const useUserStore = create((set, get) => ({
 
     try {
       const data = await fetchWithAuth(
-        `${APIEndpoint}/user/search?ques=${query}`
+        `${APIEndpoint}/users/search?query=${query}`
       );
       set({ users: data, loading: false });
     } catch (err) {
@@ -42,7 +42,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/user/${id}`);
+      const data = await fetchWithAuth(`${APIEndpoint}/users/${id}`);
       set({ selectedUser: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -55,7 +55,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/user`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/users`, {
         method: "POST",
         body: JSON.stringify(userData),
       });
@@ -78,7 +78,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/user/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/users/${id}`, {
         method: "PUT",
         body: JSON.stringify(userData),
       });
@@ -103,7 +103,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/user/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/users/${id}`, {
         method: "PATCH",
         body: JSON.stringify(partialData),
       });
@@ -128,7 +128,7 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      await fetchWithAuth(`${APIEndpoint}/user/${id}`, {
+      await fetchWithAuth(`${APIEndpoint}/users/${id}`, {
         method: "DELETE",
       });
 

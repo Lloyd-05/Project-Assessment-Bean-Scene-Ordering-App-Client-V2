@@ -14,7 +14,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/menu`);
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-items`);
       set({ menuItems: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -28,7 +28,7 @@ export const useMenuItemStore = create((set, get) => ({
 
     try {
       const data = await fetchWithAuth(
-        `${APIEndpoint}/menu/search?ques=${query}`
+        `${APIEndpoint}/menu-items/search?query=${query}`
       );
       set({ menuItems: data, loading: false });
     } catch (err) {
@@ -42,7 +42,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/menu/${id}`);
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-items/${id}`);
       set({ selectedItem: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -55,7 +55,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/menu`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-items`, {
         method: "POST",
         body: JSON.stringify(itemData),
       });
@@ -79,7 +79,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/menu/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-items/${id}`, {
         method: "PUT",
         body: JSON.stringify(itemData),
       });
@@ -104,7 +104,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/menu/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-items/${id}`, {
         method: "PATCH",
         body: JSON.stringify(partialData),
       });
@@ -129,7 +129,7 @@ export const useMenuItemStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      await fetchWithAuth(`${APIEndpoint}/menu/${id}`, {
+      await fetchWithAuth(`${APIEndpoint}/menu-items/${id}`, {
         method: "DELETE",
       });
 

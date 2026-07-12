@@ -14,7 +14,7 @@ export const useTableStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/table`);
+      const data = await fetchWithAuth(`${APIEndpoint}/tables`);
       set({ tables: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -28,7 +28,7 @@ export const useTableStore = create((set, get) => ({
 
     try {
       const data = await fetchWithAuth(
-        `${APIEndpoint}/table/search?ques=${query}`
+        `${APIEndpoint}/tables/search?query=${query}`
       );
       set({ tables: data, loading: false });
     } catch (err) {
@@ -42,7 +42,7 @@ export const useTableStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/table/${id}`);
+      const data = await fetchWithAuth(`${APIEndpoint}/tables/${id}`);
       set({ selectedTable: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -55,7 +55,7 @@ export const useTableStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/table`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/tables`, {
         method: "POST",
         body: JSON.stringify(tableData),
       });
@@ -78,7 +78,7 @@ export const useTableStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/table/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/tables/${id}`, {
         method: "PUT",
         body: JSON.stringify(tableData),
       });
@@ -103,7 +103,7 @@ export const useTableStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      await fetchWithAuth(`${APIEndpoint}/table/${id}`, {
+      await fetchWithAuth(`${APIEndpoint}/tables/${id}`, {
         method: "DELETE",
       });
 

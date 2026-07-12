@@ -63,7 +63,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/order`);
+      const data = await fetchWithAuth(`${APIEndpoint}/orders`);
 
       const ordersArray =
         Array.isArray(data) ? data :
@@ -81,7 +81,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/order`);
+      const data = await fetchWithAuth(`${APIEndpoint}/orders`);
       const ordersArray = Array.isArray(data) ? data : data.orders || [];
 
       // Filter only completed orders
@@ -100,7 +100,7 @@ export const useOrderStore = create((set, get) => ({
 
     try {
       const data = await fetchWithAuth(
-        `${APIEndpoint}/order/search?ques=${query}`
+        `${APIEndpoint}/orders/search?query=${query}`
       );
       set({ orders: data, loading: false });
     } catch (err) {
@@ -114,7 +114,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/order/${id}`);
+      const data = await fetchWithAuth(`${APIEndpoint}/orders/${id}`);
       set({ selectedOrder: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -138,7 +138,7 @@ export const useOrderStore = create((set, get) => ({
 
       console.log("FINAL ORDER PAYLOAD:", payload);
 
-      const data = await fetchWithAuth(`${APIEndpoint}/order`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/orders`, {
         method: "POST",
         body: JSON.stringify(payload),
       });
@@ -173,7 +173,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/order/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/orders/${id}`, {
         method: "PUT",
         body: JSON.stringify(orderData),
       });
@@ -198,7 +198,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/order/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/orders/${id}`, {
         method: "PATCH",
         body: JSON.stringify(partialData),
       });
@@ -223,7 +223,7 @@ export const useOrderStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      await fetchWithAuth(`${APIEndpoint}/order/${id}`, {
+      await fetchWithAuth(`${APIEndpoint}/orders/${id}`, {
         method: "DELETE",
       });
 

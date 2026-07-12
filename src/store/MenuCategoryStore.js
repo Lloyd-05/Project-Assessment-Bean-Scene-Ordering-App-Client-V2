@@ -14,7 +14,7 @@ export const useCategoryStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/category`);
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-categories`);
       set({ categories: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -28,7 +28,7 @@ export const useCategoryStore = create((set, get) => ({
 
     try {
       const data = await fetchWithAuth(
-        `${APIEndpoint}/category/search?ques=${query}`
+        `${APIEndpoint}/menu-categories/search?query=${query}`
       );
       set({ categories: data, loading: false });
     } catch (err) {
@@ -42,7 +42,7 @@ export const useCategoryStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/category/${id}`);
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-categories/${id}`);
       set({ selectedCategory: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -55,7 +55,7 @@ export const useCategoryStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/category`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-categories`, {
         method: "POST",
         body: JSON.stringify(categoryData),
       });
@@ -78,7 +78,7 @@ export const useCategoryStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      const data = await fetchWithAuth(`${APIEndpoint}/category/${id}`, {
+      const data = await fetchWithAuth(`${APIEndpoint}/menu-categories/${id}`, {
         method: "PUT",
         body: JSON.stringify(categoryData),
       });
@@ -103,7 +103,7 @@ export const useCategoryStore = create((set, get) => ({
     set({ loading: true, error: null });
 
     try {
-      await fetchWithAuth(`${APIEndpoint}/category/${id}`, {
+      await fetchWithAuth(`${APIEndpoint}/menu-categories/${id}`, {
         method: "DELETE",
       });
 
