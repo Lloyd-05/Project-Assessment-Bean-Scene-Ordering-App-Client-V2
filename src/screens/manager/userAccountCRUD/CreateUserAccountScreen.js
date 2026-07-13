@@ -83,7 +83,7 @@ const CreateUserScreen = () => {
           <Text style={[styles.label, { color: theme.colors.text }]}>User Name</Text>
           <TextInput
             style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]} placeholder="Input"
-            value={name}
+            value={username}
             onChangeText={(text) => {
               setName(text);
               if (errorMessage) {
@@ -97,7 +97,7 @@ const CreateUserScreen = () => {
           <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
           <TextInput
             style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]} placeholder="Input"
-            value={name}
+            value={password}
             onChangeText={(text) => {
               setName(text);
               if (errorMessage) {
