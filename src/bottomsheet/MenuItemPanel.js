@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+import { BottomSheet, BottomSheetScrollView, BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useOrderStore } from "../store/OrderStore";
 import { useMenuItemStore } from "../store/MenuItemStore";
-
+import { useCategoryStore } from '../store/MenuCategoryStore';
 
 export default function MenuItemPanel({ sheetRef }) {
-    const snapPoints = useMemo(() => ['25%', '50%', '90%'], []);
+    const snapPoints = useMemo(() => ['90%'], []);
     const [category, setCategory] = useState('');
     const [name, setName] = useState('');
     const [quantities, setQuantities] = useState({});
@@ -15,8 +15,21 @@ export default function MenuItemPanel({ sheetRef }) {
     const addItemToOrder = useOrderStore((s) => s.addItemToOrder);
     const menuItems = useMenuItemStore((s) => s.menuItems);
     const fetchMenuItems = useMenuItemStore((s) => s.fetchMenuItems);
+    const menuCategories = useCategoryStore((c => c.categories));
+    const fetchMenuCategories = useCategoryStore((c => c.fetchCategories));
 
-    useEffect(() => { fetchMenuItems(); }, [fetchMenuItems]);
+    useEffect(() => {
+        fetchMenuItems();
+        fetchMenuCategories();
+    }, [fetchMenuItems, fetchMenuCategories]);
+
+    const categoryOptions = useMemo(() =>
+        (menuCategories || []).map((cat) => ({
+            label: cat.name,
+            value: cat._id || cat.name,
+        })),
+        [menuCategories]
+    );
 
     const getItemKey = (item, index) => item._id || `${item.name}-${index}`;
     const getQuantityForItem = (item, index) => {
@@ -32,116 +45,123 @@ export default function MenuItemPanel({ sheetRef }) {
         }));
     };
 
-    const categories = [
-        { label: 'Entrees', value: 'entrees' },
-        { label: 'Mains', value: 'mains' },
-        { label: 'Specials', value: 'specials' },
-        { label: 'Sides', value: 'sides' },
-        { label: 'Desserts', value: 'desserts' },
-        { label: 'Drinks', value: 'drinks' },
-    ];
+    // const categories = [
+    //     { label: 'Entrees', value: 'entrees' },
+    //     { label: 'Mains', value: 'mains' },
+    //     { label: 'Specials', value: 'specials' },
+    //     { label: 'Sides', value: 'sides' },
+    //     { label: 'Desserts', value: 'desserts' },
+    //     { label: 'Drinks', value: 'drinks' },
+    // ];
 
     return (
         <BottomSheet
             ref={sheetRef}
-            index={-1}
+            index={0}
             snapPoints={snapPoints}
-            enableDynamicSizing={false}
+            snapPoints={snapPoints}
+            enablePanGesture={false}
+            enableHandlePanningGesture={false}
+            enableContentPanningGesture={false}
+            enablePanDownToClose={false}
+            enableOverDrag={false}
+            handleComponent={null}
             backgroundStyle={{ backgroundColor: '#4fa3b6' }}
-            handleIndicatorStyle={{ backgroundColor: '#d4af37' }}
+            // handleIndicatorStyle={{ backgroundColor: '#d4af37' }}
             onChange={(index) => console.log(index)}
         >
-            <ScrollView>
-                <View style={styles.panelContainer}>
-                    <View style={styles.headerRow}>
-                        <TouchableOpacity style={styles.closeButton} onPress={() => sheetRef.current?.close()}>
-                            <Text style={styles.closeText}>Close</Text>
-                        </TouchableOpacity>
-                    </View>
+            {/* <ScrollView> */}
+            <BottomSheetScrollView nestedScrollEnabled contentContainerStyle={styles.panelContainer}>
 
-                    <View style={styles.searchRow}>
-                        <Dropdown
-                            style={styles.dropdown}
-                            data={categories}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Select Category"
-                            value={category}
-                            onChange={(name) => setCategory(name.value)}
-                        />
-
-                        <TextInput
-                            style={styles.searchInput}
-                            placeholder="Search Item Name"
-                            value={name}
-                            onChangeText={setName}
-                        />
-
-                        <TouchableOpacity style={styles.clearButton} onPress={() => { setCategory(''); setName(''); }}>
-                            <Text style={styles.clearText}>Clear</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.searchButton}>
-                            <Text style={styles.searchText}>Search</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <ScrollView contentContainerStyle={styles.itemsContainer}>
-                        {menuItems.map((item, index) => {
-                            const itemQuantity = getQuantityForItem(item, index);
-
-                            return (
-                                <View key={getItemKey(item, index)} style={styles.itemCard}>
-                                    <Text style={styles.itemName}>{item.name}</Text>
-                                    <Text style={styles.itemPrice}>Price: {item.price}</Text>
-                                    <Text style={styles.itemDescription}>Description: {item.description}</Text>
-                                    <Text style={styles.itemCategory}>
-                                        Category: {item.category?.name || item.category}
-                                    </Text>
-                                    <Text style={styles.itemDietary}>Dietary Flags: {item.dietaryFlags?.join(', ') || item.dietaryFlags}</Text>
-                                    <Text style={styles.itemAvailability}>Availability: {String(item.Availability ?? item.availability)}</Text>
-
-                                    <View style={styles.quantityRow}>
-
-                                        <TouchableOpacity
-                                            style={styles.qtyButton}
-                                            onPress={() => setQuantityForItem(item, index, itemQuantity - 1)}
-                                        >
-                                            <Text style={styles.qtyButtonText}>−</Text>
-                                        </TouchableOpacity>
-
-                                        <TextInput
-                                            style={styles.quantityInput}
-                                            keyboardType="numeric"
-                                            value={String(itemQuantity)}
-                                            onChangeText={(text) => setQuantityForItem(item, index, parseInt(text, 10) || 1)}
-                                        />
-
-                                        <TouchableOpacity
-                                            style={styles.qtyButton}
-                                            onPress={() => setQuantityForItem(item, index, itemQuantity + 1)}
-                                        >
-                                            <Text style={styles.qtyButtonText}>+</Text>
-                                        </TouchableOpacity>
-
-                                        <TouchableOpacity
-                                            style={styles.addButton}
-                                            onPress={() => {
-                                                console.log("ADDING ITEM:", item, itemQuantity)
-                                                addItemToOrder(item, itemQuantity)
-                                            }}                                            
-                                        >
-                                            <Text style={styles.addText}>Add</Text>
-                                            
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            );
-                        })}
-                    </ScrollView>
-
+                <View style={styles.headerRow}>
+                    <TouchableOpacity style={styles.closeButton} onPress={() => sheetRef.current?.close()}>                            <Text style={styles.closeText}>Close</Text>
+                    </TouchableOpacity>
                 </View>
-            </ScrollView>
+
+                <View style={styles.searchRow}>
+                    <Dropdown
+                        style={styles.dropdown}
+                        data={categoryOptions}
+                        labelField="label"
+                        valueField="value"
+                        placeholder="Select Category"
+                        value={category}
+                        onChange={(selectedCategory) => setCategory(selectedCategory.value)}
+                    />
+
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder="Search Item Name"
+                        value={name}
+                        onChangeText={setName}
+                    />
+
+                    <TouchableOpacity style={styles.clearButton} onPress={() => { setCategory(''); setName(''); }}>
+                        <Text style={styles.clearText}>Clear</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.searchButton}>
+                        <Text style={styles.searchText}>Search</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <BottomSheetFlatList
+                    data={filteredMenuItems}
+                    keyExtractor={(item, index) => getItemKey(item, index)}
+                    renderItem={({ item, index }) => {
+                        const itemQuantity = getQuantityForItem(item, index);
+                        return (
+                            <View style={styles.itemCard}>
+                                <Text style={styles.itemName}>{item.name}</Text>
+                                <Text style={styles.itemPrice}>Price: {item.price}</Text>
+                                <Text style={styles.itemDescription}>Description: {item.description}</Text>
+                                <Text style={styles.itemCategory}>
+                                    Category: {item.category?.name || item.category}
+                                </Text>
+                                <Text style={styles.itemDietary}>Dietary Flags: {item.dietaryFlags?.join(', ') || item.dietaryFlags}</Text>
+                                <Text style={styles.itemAvailability}>Availability: {String(item.Availability ?? item.availability)}</Text>
+
+                                <View style={styles.quantityRow}>
+
+                                    <TouchableOpacity
+                                        style={styles.qtyButton}
+                                        onPress={() => setQuantityForItem(item, index, itemQuantity - 1)}
+                                    >
+                                        <Text style={styles.qtyButtonText}>−</Text>
+                                    </TouchableOpacity>
+
+                                    <TextInput
+                                        style={styles.quantityInput}
+                                        keyboardType="numeric"
+                                        value={String(itemQuantity)}
+                                        onChangeText={(text) => setQuantityForItem(item, index, parseInt(text, 10) || 1)}
+                                    />
+
+                                    <TouchableOpacity
+                                        style={styles.qtyButton}
+                                        onPress={() => setQuantityForItem(item, index, itemQuantity + 1)}
+                                    >
+                                        <Text style={styles.qtyButtonText}>+</Text>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity
+                                        style={styles.addButton}
+                                        onPress={() => {
+                                            console.log("ADDING ITEM:", item, itemQuantity)
+                                            addItemToOrder(item, itemQuantity)
+                                        }}
+                                    >
+                                        <Text style={styles.addText}>Add</Text>
+
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        );
+
+                    }}
+                />
+                {/* </ScrollView> */}
+            </BottomSheetScrollView>
         </BottomSheet >
     );
 }
@@ -304,4 +324,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
-});
+})
