@@ -184,13 +184,13 @@ export default function WaiterMenuItemListScreen() {
                 <Text style={[styles.itemName, { color: theme.colors.onSurface }]}>
                   {item.name}
                 </Text>
-                <Text style={{ color: theme.colors.onSurface }}>
+                <Text style={[ styles.itemText, {color: theme.colors.onSurface }]}>
                   Price: ${item.price}
                 </Text>
-                <Text style={{ color: theme.colors.onSurface }}>
+                <Text style={[styles.itemText,{ color: theme.colors.onSurface }]}>
                   Category: {item.category?.name || "N/A"}
                 </Text>
-                <Text style={{ color: theme.colors.onSurface }}>
+                <Text style={[styles.itemText,{ color: theme.colors.onSurface }]}>
                    Dietary Flags: {item.dietaryFlags?.join(', ') || 'None'}
 
                 </Text>
@@ -353,7 +353,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold"
   },
+  itemText: {
+    fontSize: 16,
 
+  },
   qtyRow: {
     flexDirection: "row",
     alignItems: "center",
