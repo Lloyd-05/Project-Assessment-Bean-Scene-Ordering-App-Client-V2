@@ -53,21 +53,17 @@ const StaffHomeScreen = () => {
           </Text>
         </View>
         <TouchableOpacity
-          style={[styles.settingsButton, { backgroundColor: theme.colors.teal }]}
+          style={[styles.settingsButton, { backgroundColor: theme.colors.beanDarkBlue }]}
           onPress={() => navigation.navigate('Settings')}
         >
-          <Text style={[styles.buttonText, { color: theme.colors.beanDarkBlue }]}>
-            Settings
-          </Text>
+          <Text style={[styles.buttonText, { color: theme.colors.white }]}>Settings</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.logoutButton, { backgroundColor: theme.colors.gold }]}
+          style={[styles.logoutButton, { backgroundColor: theme.colors.beanGold }]}
           onPress={logout}
         >
-          <Text style={[styles.buttonText, { color: theme.colors.beanDarkBlue }]}>
-            Log Out
-          </Text>
+          <Text style={[styles.buttonText, { color: theme.colors.beanDarkBlue }]}>Log Out</Text>
         </TouchableOpacity>
 
       </ScrollView>
