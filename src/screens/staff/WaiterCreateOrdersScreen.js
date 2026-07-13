@@ -44,7 +44,8 @@ const WaiterCreateOrdersScreen = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={() => sheetRef.current?.expand()}
+                        // onPress={() => sheetRef.current?.expand()}
+                        onPress={() => navigation.navigate("MenuItemList")}
                     >
                         <View style={[styles.line, { backgroundColor: theme.colors.onSurface }]} />
                         <View style={[styles.line, { backgroundColor: theme.colors.onSurface }]} />
@@ -141,7 +142,7 @@ const WaiterCreateOrdersScreen = () => {
 
             </ScrollView>
 
-            <MenuItemPanel sheetRef={sheetRef} />
+            {/* <MenuItemPanel sheetRef={sheetRef} /> */}
         </View>
     );
 };
@@ -158,7 +159,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         width: '100%',
-        paddingBottom: 40,
+        paddingBottom: 400,
         marginBottom: 50,
     },
     scrollContent: {

@@ -83,7 +83,7 @@ const CreateUserScreen = () => {
           <Text style={[styles.label, { color: theme.colors.text }]}>User Name</Text>
           <TextInput
             style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]} placeholder="Input"
-            value={name}
+            value={username}
             onChangeText={(text) => {
               setName(text);
               if (errorMessage) {
@@ -96,13 +96,12 @@ const CreateUserScreen = () => {
         <View style={styles.inputGroup}>
           <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
           <TextInput
-            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]} placeholder="Input"
-            value={name}
+            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}
+            placeholder="Input"
+            value={username}
             onChangeText={(text) => {
-              setName(text);
-              if (errorMessage) {
-                setErrorMessage('')
-              };
+              setUsername(text);
+              if (errorMessage) setErrorMessage('');
             }}
           />
         </View>
@@ -111,15 +110,13 @@ const CreateUserScreen = () => {
         <View style={[styles.inputGroup, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}>
           {/* <Text style={[styles.label, { color: theme.colors.text }]}>Role</Text> */}
 
-          <Dropdown
-            style={[styles.dropDown, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}
-            data={roles}
-            labelField="label"
-            valueField="value"
-            placeholder="Select Role"
-            value={role}
-            onChange={(item) => {
-              setRole(item.value);
+          <TextInput
+            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}
+            placeholder="Input"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
               if (errorMessage) setErrorMessage('');
             }}
           />
