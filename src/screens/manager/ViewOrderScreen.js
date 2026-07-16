@@ -110,7 +110,7 @@ const { theme, overrideTheme } = useTheme();
 
               {order.menuItems.map((item, index) => (
                 <Text key={index} style={styles.itemText}>
-                  {item.menuItemId.name} — Qty: {item.quantity}
+                  {item.menuItemId?.name} — Qty: {item.quantity}
                 </Text>
               ))}
             </View>

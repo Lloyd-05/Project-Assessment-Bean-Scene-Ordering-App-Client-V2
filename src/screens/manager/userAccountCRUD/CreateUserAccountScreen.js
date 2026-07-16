@@ -10,6 +10,7 @@ const CreateUserScreen = () => {
   const navigation = useNavigation();
   const { theme } = useTheme();
   const beanSceneLogo = useLogo();
+
   const { createUser, loading } = useUserStore();
 
   const [username, setUsername] = useState('');
@@ -49,7 +50,9 @@ const CreateUserScreen = () => {
         <Image source={beanSceneLogo} style={styles.Image} />
 
         <View style={[styles.banner, { backgroundColor: theme.colors.primary }]}>
-          <Text style={[styles.bannerText, { color: theme.colors.onPrimary }]}>Create User</Text>
+          <Text style={[styles.bannerText, { color: theme.colors.onPrimary }]}>
+            Create User
+          </Text>
         </View>
 
         <View style={styles.buttonRow}>
@@ -58,17 +61,22 @@ const CreateUserScreen = () => {
             onPress={() => navigation.goBack()}
             disabled={loading}
           >
-            <Text style={[styles.cancelText, { color: theme.colors.beanDarkBlue }]}>Cancel</Text>
+            <Text style={[styles.cancelText, { color: theme.colors.beanDarkBlue }]}>
+              Cancel
+            </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.createButton, { backgroundColor: theme.colors.beanDarkBlue }]}
+          <TouchableOpacity
+            style={[styles.createButton, { backgroundColor: theme.colors.beanDarkBlue }]}
             onPress={handleCreate}
             disabled={loading}
           >
             {loading ? (
               <ActivityIndicator color={theme.colors.white} />
             ) : (
-              <Text style={[styles.createText, { color: theme.colors.white }]}>Create</Text>
+              <Text style={[styles.createText, { color: theme.colors.white }]}>
+                Create
+              </Text>
             )}
           </TouchableOpacity>
         </View>
@@ -82,21 +90,10 @@ const CreateUserScreen = () => {
         <View style={styles.inputGroup}>
           <Text style={[styles.label, { color: theme.colors.text }]}>User Name</Text>
           <TextInput
-            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]} placeholder="Input"
-            value={username}
-            onChangeText={(text) => {
-              setName(text);
-              if (errorMessage) {
-                setErrorMessage('')
-              };
-            }}
-          />
-        </View>
-
-        <View style={styles.inputGroup}>
-          <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
-          <TextInput
-            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}
+            style={[
+              styles.input,
+              { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }
+            ]}
             placeholder="Input"
             value={username}
             onChangeText={(text) => {
@@ -105,13 +102,14 @@ const CreateUserScreen = () => {
             }}
           />
         </View>
-        <Text style={[styles.label, { color: theme.colors.text }]}>Role</Text>
 
-        <View style={[styles.inputGroup, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}>
-          {/* <Text style={[styles.label, { color: theme.colors.text }]}>Role</Text> */}
-
+        <View style={styles.inputGroup}>
+          <Text style={[styles.label, { color: theme.colors.text }]}>Password</Text>
           <TextInput
-            style={[styles.input, { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }]}
+            style={[
+              styles.input,
+              { backgroundColor: theme.colors.beanLightGrey, color: theme.colors.onSurface }
+            ]}
             placeholder="Input"
             secureTextEntry
             value={password}
@@ -121,6 +119,27 @@ const CreateUserScreen = () => {
             }}
           />
         </View>
+
+        <View style={styles.inputGroup}>
+          <Text style={[styles.label, { color: theme.colors.text }]}>Role</Text>
+
+          <Dropdown
+            style={[
+              styles.dropDown,
+              { backgroundColor: theme.colors.beanLightGrey }
+            ]}
+            data={roles}
+            labelField="label"
+            valueField="value"
+            placeholder="Select Role"
+            value={role}
+            onChange={(item) => {
+              setRole(item.value);
+              if (errorMessage) setErrorMessage('');
+            }}
+          />
+        </View>
+
       </ScrollView>
     </View>
   );
@@ -144,16 +163,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 40,
   },
-
   Image: {
     marginTop: 50,
     width: "80%",
     height: undefined,
-    aspectRatio: 1.8, // tweak until it fits nicely
+    aspectRatio: 1.8,
     resizeMode: "contain",
     alignSelf: "center"
   },
-
   banner: {
     width: '100%',
     paddingVertical: 10,
@@ -216,8 +233,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     padding: 10,
     borderRadius: 4,
-    fontSize: 16,
-    textAlign: 'center',
   },
   errorText: {
     color: '#d32f2f',
